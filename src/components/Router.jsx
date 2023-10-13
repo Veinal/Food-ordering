@@ -9,6 +9,7 @@ import Orders from './Orders'
 import Adminpage from './Adminpage'
 import Productlist from './Productlist'
 import Orderlist from './Orderlist'
+import Footer from './Footer'
 
 export default function Router() {
   return (
@@ -24,6 +25,7 @@ export default function Router() {
             <Route exact path='/adminpage' element={<Adminpage/>} />
             <Route exact path='/productlist' element={<Productlist/>} />
             <Route exact path='/orderlist' element={<Orderlist/>} />
+            <Route exact path='/footer' element={<Footer/>} />
         </Routes>
         </BrowserRouter>
     </div>

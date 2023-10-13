@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState,useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
@@ -13,12 +14,18 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 // import InboxIcon from '@mui/icons-material/MoveToInbox';
 // import MailIcon from '@mui/icons-material/Mail';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 
 
 const style = {
@@ -28,18 +35,65 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  border: '1px solid #000',
   boxShadow: 24,
   p: 4,
 };
 
-const drawerWidth = 240;
+const drawerWidth = 170;
+
 
 export default function Productlist() {
+  const navigate=useNavigate()
+
+  //for input form and handlesubmitting
+  const [form,setFrom] = useState()
+  const Input=(e)=>{
+    // console.log({[e.target.name]:e.target.value});
+    setFrom({...form,[e.target.name]:e.target.value})
+  }
+  console.log(form,'form');
+
+  let initialValue;
+  if(localStorage.getItem("Food")===null){
+    initialValue=[]
+  }else{
+    initialValue=JSON.parse(localStorage.getItem("Food"))
+  }
+  const [value,setValue]=useState(initialValue)
+
+  const handleSubmit= async(e)=>{
+    e.preventDefault();
+    const newId=value.length===0? 1:value[value.length-1].id+1
+    let user={
+      id:newId,...form
+    }
+    const newValue=[...value,user]
+    setValue(newValue)
+
+    localStorage.setItem("Food",JSON.stringify(newValue))
+    console.log(newValue);
+
+    handleClose()
+    navigate('/productlist')
+  }
+
+  //for displaying values in table
+
+  const [get,setGet]= useState([])
+  const [count,setCount] = useState(true)
+
+  useEffect(()=>{
+    const set=JSON.parse(localStorage.getItem("Food"))
+    if(set){
+      setGet(set)
+    }
+  },[count])
+  // console.log(get,"get");
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
 
   return (
     <div>
@@ -47,8 +101,9 @@ export default function Productlist() {
       <CssBaseline />
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} >
         <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            ADMIN DASHBOARD
+        <Link to='/' ><Button variant='contained' color='success' style={{marginLeft:'-10px',padding:'8px'}}><ArrowBackIcon/> Back to home</Button></Link>
+          <Typography variant="h6" noWrap component="div" style={{marginLeft:'20px'}}>
+            ADMIN DASHBOARD   
           </Typography>
         </Toolbar>
       </AppBar>
@@ -92,111 +147,38 @@ export default function Productlist() {
         <table className="table align-middle mb-0 bg-white">
           <thead className="bg-light">
             <tr>
-              <th>Name</th>
-              <th>Title</th>
+              <th>Sl no.</th>
+              <th>Product</th>
+              <th>Image</th>
+              <th>Price</th>
               <th>Status</th>
-              <th>Position</th>
+              <th>Category</th>
+              <th>Desc</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <div className="d-flex align-items-center">
-                  <img
-                      src="https://mdbootstrap.com/img/new/avatars/8.jpg"
-                      alt=""
-                      style={{width: "45px", height: "45px"}}
-                      className="rounded-circle"
-                      />
-                  <div className="ms-3">
-                    <p className="fw-bold mb-1">John Doe</p>
-                    <p className="text-muted mb-0">john.doe@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <p className="fw-normal mb-1">Software engineer</p>
-                <p className="text-muted mb-0">IT department</p>
-              </td>
-              <td>
-                <span className="badge badge-success rounded-pill d-inline">Active</span>
-              </td>
-              <td>Senior</td>
-              <td>
-                <button type="button" className="btn btn-link btn-sm btn-rounded">
-                  Edit
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div className="d-flex align-items-center">
-                  <img
-                      src="https://mdbootstrap.com/img/new/avatars/6.jpg"
-                      className="rounded-circle"
-                      alt=""
-                      style={{width: "45px", height: "45px"}}
-                      />
-                  <div className="ms-3">
-                    <p className="fw-bold mb-1">Alex Ray</p>
-                    <p className="text-muted mb-0">alex.ray@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <p className="fw-normal mb-1">Consultant</p>
-                <p className="text-muted mb-0">Finance</p>
-              </td>
-              <td>
-                <span className="badge badge-primary rounded-pill d-inline"
-                      >Onboarding</span
-                  >
-              </td>
-              <td>Junior</td>
-              <td>
-                <button
-                        type="button"
-                        className="btn btn-link btn-rounded btn-sm fw-bold"
-                        data-mdb-ripple-color="dark"
-                        >
-                  Edit
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div className="d-flex align-items-center">
-                  <img
-                      src="https://mdbootstrap.com/img/new/avatars/7.jpg"
-                      className="rounded-circle"
-                      alt=""
-                      style={{width: "45px", height: "45px"}}
-                      />
-                  <div className="ms-3">
-                    <p className="fw-bold mb-1">Kate Hunington</p>
-                    <p className="text-muted mb-0">kate.hunington@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <p className="fw-normal mb-1">Designer</p>
-                <p className="text-muted mb-0">UI/UX</p>
-              </td>
-              <td>
-                <span className="badge badge-warning rounded-pill d-inline">Awaiting</span>
-              </td>
-              <td>Senior</td>
-              <td>
-                <button
-                        type="button"
-                        className="btn btn-link btn-rounded btn-sm fw-bold"
-                        data-mdb-ripple-color="dark"
-                        >
-                  Edit
-                </button>
-              </td>
-            </tr>
+            {get?.map((i,index)=>{
+              return(
+                <>
+                  <tr>
+                    <td>{index+1}</td>
+                    <td>{i.product}</td>
+                    <td>{i.image}</td>
+                    <td>{i.price}</td>
+                    <td>{i.status}</td>
+                    <td>{i.category}</td>
+                    <td>{i.description}</td>
+                    <td>
+                      <Button variant='contained' color='primary'>Edit</Button>
+                      <Button variant='contained' color='error'>Delete</Button>
+                    </td>
+                  </tr>
+                </>
+              )
+            })}
+            
+            
           </tbody>
         </table>
         </Typography>
@@ -214,18 +196,35 @@ export default function Productlist() {
       >
         <Box sx={style}>
         <div style={{display:'grid',justifyContent:'center',alignItems:"center",gap:'10px'}}>
-          <h1>ADD PRODUCT</h1>
-          <TextField id="outlined-basic" label="Product name" variant="outlined" />
-          <TextField id="outlined-basic" label="Image" variant="outlined" />
-          <TextField id="outlined-number" label="Price" type="number" />
-          <TextField id="outlined-number" label="Quantity" type="number" />
-          <TextField id="outlined-basic" label="Description" variant="outlined" />
-          <Button variant='contained' color='secondary'><SendIcon/>Submit</Button>
+          <h1><b><u>ADD PRODUCT</u></b></h1>
+          <TextField name='product' label="Product name" variant="outlined" onChange={(e)=>Input(e)}/>
+          <TextField name='image' label="Image" variant="outlined" onChange={(e)=>Input(e)}/>
+          <TextField name='price' label="Price" type="number" onChange={(e)=>Input(e)}/>
+          {/* <TextField name='status' label="Status" variant="outlined" onChange={(e)=>Input(e)}/> */}
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Status</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                name='status'
+                // value={age}
+                label="Age"
+                onChange={(e)=>Input(e)}
+              >
+                <MenuItem value={'Available'}>Available</MenuItem>
+                <MenuItem value={'Not Available'}>Not Available</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          <TextField name='category' label="Category" variant="outlined" onChange={(e)=>Input(e)}/>
+          <TextField name='description' label="Description" variant="outlined" onChange={(e)=>Input(e)}/>
+          <Button variant='contained' color='secondary' onClick={handleSubmit}><AddIcon/>ADD</Button>
         </div>
         </Box>
       </Modal>
     </div>
-
+      
     </div>
   )
 }
