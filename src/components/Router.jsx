@@ -10,6 +10,10 @@ import Adminpage from './Adminpage'
 import Productlist from './Productlist'
 import Orderlist from './Orderlist'
 import Footer from './Footer'
+import Viewcard from './Viewcard'
+import Editprolist from './Editprolist'
+import Editorderlist from './Editorderlist'
+import Vieworders from './Vieworders'
 
 export default function Router() {
   return (
@@ -26,6 +30,10 @@ export default function Router() {
             <Route exact path='/productlist' element={<Productlist/>} />
             <Route exact path='/orderlist' element={<Orderlist/>} />
             <Route exact path='/footer' element={<Footer/>} />
+            <Route exact path='/viewcard' element={<Viewcard/>} />
+            <Route exact path='/editprolist/:id' element={<Editprolist/>} />
+            <Route exact path='/editorderlist/:id' element={<Editorderlist/>} />
+            <Route exact path='/vieworders' element={<Vieworders/>} />
         </Routes>
         </BrowserRouter>
     </div>

@@ -25,7 +25,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
+import Productdeletecard from './Productdeletecard'
 
 
 const style = {
@@ -40,7 +40,7 @@ const style = {
   p: 4,
 };
 
-const drawerWidth = 170;
+const drawerWidth = 150;
 
 
 export default function Productlist() {
@@ -88,12 +88,29 @@ export default function Productlist() {
     if(set){
       setGet(set)
     }
-  },[count])
+  },[get])
   // console.log(get,"get");
 
+  //Add product
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  //Edit option
+  const [open4, setOpen4] = React.useState(false);
+  const handleOpenedit = () => setOpen4(true);
+  const handleCloseedit = () => setOpen4(false);
+
+  //Delete option
+  const [open5, setOpen5] = React.useState(false);
+  const [selectedProd,setSelectedProd]=useState('')
+
+  const handleOpendel = (i) =>{ 
+    setOpen5(true);
+    setSelectedProd(i)
+  }
+  const handleClosedel = () => setOpen5(false);
+
 
   return (
     <div>
@@ -164,14 +181,14 @@ export default function Productlist() {
                   <tr>
                     <td>{index+1}</td>
                     <td>{i.product}</td>
-                    <td>{i.image}</td>
+                    <td><img src={i.image} style={{width:50}}></img></td>
                     <td>{i.price}</td>
                     <td>{i.status}</td>
                     <td>{i.category}</td>
                     <td>{i.description}</td>
-                    <td>
-                      <Button variant='contained' color='primary'>Edit</Button>
-                      <Button variant='contained' color='error'>Delete</Button>
+                    <td style={{display:'flex',gap:3}}>
+                      <Link to={`/editprolist/${i.id}`}><Button variant='contained' color='primary'>Edit</Button></Link>
+                      <Button onClick={()=>handleOpendel(i)} variant='contained' color='error'>Delete</Button>
                     </td>
                   </tr>
                 </>
@@ -225,6 +242,34 @@ export default function Productlist() {
       </Modal>
     </div>
       
+    <div>
+      {/* <Button onClick={handleOpen}>Open modal</Button> */}
+      <Modal
+        open={open4}
+        onClose={handleCloseedit}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          view
+        </Box>
+      </Modal>
+    </div>  
+
+    <div>
+      {/* <Button onClick={handleOpen}>Open modal</Button> */}
+      <Modal
+        open={open5}
+        onClose={handleClosedel}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Productdeletecard handleClosedel={handleClosedel} selectedProd={selectedProd} get={get} setGet={setGet} setCount={setCount}/>
+        </Box>
+      </Modal>
+    </div>
+
     </div>
   )
 }
