@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, TextField, Typography, Grid, Paper, Container, Select, MenuItem } from '@mui/material';
+import Pic from '../backpic.jpg'
 
 const containerStyle = {
-  backgroundImage : "url('https://images.unsplash.com/photo-1543353071-10c8ba85a904?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')",
+  backgroundImage: `url(${Pic})`,
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
   backgroundAttachment: 'fixed',
   minHeight: '100vh',
-  // display: 'flex',
-  // flexDirection: 'column',
-  // alignItems: 'center',
-  // justifyContent: 'center',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
 };
 
 
@@ -54,6 +55,8 @@ export default function Editprolist() {
     await navigate('/productlist');
   };
 
+  console.log(disp.status);
+
   return (
     <div style={containerStyle}>
       <Container maxWidth="sm">
@@ -95,20 +98,22 @@ export default function Editprolist() {
                   onChange={(e) => handleChange(e)}
                 />
               </Grid>
+              {/* {disp?.status} */}
               <Grid item xs={12}>
                 <Select
                   fullWidth
                   name="status"
                   label="Status"
                   variant="outlined"
-                  value={disp?.status}
+                  value={disp?.status=="Available"? "Available" : "Not Available"} 
                   onChange={(e) => handleChange(e)}
                 >
-                  <MenuItem value="Available">Available</MenuItem>
+                  <MenuItem value={"Available"}>Available</MenuItem>
                   <MenuItem value="Not Available">Not Available</MenuItem>
                 </Select>
               </Grid>
-              <Grid item xs={12}>
+
+              {/* <Grid item xs={12}>
                 <TextField
                   fullWidth
                   name="category"
@@ -117,7 +122,7 @@ export default function Editprolist() {
                   value={disp?.category}
                   onChange={(e) => handleChange(e)}
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   fullWidth

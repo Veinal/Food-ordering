@@ -14,6 +14,8 @@ import Viewcard from './Viewcard'
 import Editprolist from './Editprolist'
 import Editorderlist from './Editorderlist'
 import Vieworders from './Vieworders'
+import Cancelorder from './Cancelorder'
+import Categorylist from './Categorylist'
 
 export default function Router() {
   return (
@@ -34,6 +36,8 @@ export default function Router() {
             <Route exact path='/editprolist/:id' element={<Editprolist/>} />
             <Route exact path='/editorderlist/:id' element={<Editorderlist/>} />
             <Route exact path='/vieworders' element={<Vieworders/>} />
+            <Route exact path='/cancelorder' element={<Cancelorder/>} />
+            <Route exact path='/categorylist' element={<Categorylist/>} />
         </Routes>
         </BrowserRouter>
     </div>

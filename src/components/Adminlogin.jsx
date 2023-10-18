@@ -89,6 +89,7 @@ export default function SignUp() {
                   id="email"
                   label="Email Address"
                   name="email"
+                  value='veinalseq@gmail.com'
                   autoComplete="email"
                 />
               </Grid>
@@ -100,6 +101,7 @@ export default function SignUp() {
                   label="Password"
                   type="password"
                   id="password"
+                  value='veinalseq'
                   autoComplete="new-password"
                 />
               </Grid>

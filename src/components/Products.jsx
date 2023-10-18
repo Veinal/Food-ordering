@@ -53,8 +53,9 @@ const drawerWidth = 240;
 export default function ClippedDrawer() {
 
   const [get2,setGet2]=useState([])
-  const [search,setSearch] =useState('')
+  // const [search,setSearch] =useState('')
   const [categories, setCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
   //modal states
   const [open, setOpen] = React.useState(false);
@@ -78,28 +79,22 @@ export default function ClippedDrawer() {
     if(set2){
       setGet2(set2)
     }
+  
   },[])
 
-  // const filteredProducts = get2.filter((item) => {
-  //   const productInfo = `${item.product} ${item.description} ${item.category}`.toLowerCase();
-  //   return (
-  //     productInfo.includes(search.toLowerCase()) &&
-  //     (categories.length === 0 || categories.includes(item.category.toLowerCase()))
-  //   );
-  // });
-
-  const filteredProducts = get2.filter((item) => {
-    const productInfo = `${item.product} ${item.description} ${item.category}`.toLowerCase();
-    return (
-      productInfo.includes(search.toLowerCase()) &&
-      (categories.length === 0 || (item.category && categories.includes(item.category.toLowerCase())))
-    );
-  });
+  useEffect(()=>{
+    const setCat=JSON.parse(localStorage.getItem("Category"))
+    if(setCat){
+      setCategories(setCat)
+    }
+  },[])
+console.log(get2,'get');
   
-
+  
+  // console.log(filteredProducts.length,'pro');
   const handleCategoryChange = (e) => {
-    const categoryName = e.target.name;
-    setCategories((prevCategories) => {
+    const categoryName = e;
+    setSelectedCategories((prevCategories) => {
       if (prevCategories.includes(categoryName)) {
         // If the category is already selected, remove it
         return prevCategories.filter((category) => category !== categoryName);
@@ -115,6 +110,33 @@ export default function ClippedDrawer() {
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
 
+  //get categories from localstorage
+  // const [getCategory,setGetCategory]=useState([])
+
+  const [search, setSearch] = useState('');
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  const handleSearch = (e) => {
+    const searchText = e.target.value.toLowerCase();
+    setSearch(searchText);
+  
+    // Filter products based on the search text
+    const filtered = get2.filter((item) =>
+      // item.product.toLowerCase().includes(searchText)
+      item.product && item.product.toLowerCase().includes(searchText)
+    );
+    setFilteredProducts(filtered);
+  };
+  
+  const filterProductsByCategory = () => {
+    if (selectedCategories.length === 0) {
+      return get2; // Return all products if no category is selected
+    } else {
+      // Filter products based on selected categories
+      return get2.filter((item) => selectedCategories.includes(item.category));
+    }
+  };
+  
 
   return (
     <div>
@@ -139,13 +161,30 @@ export default function ClippedDrawer() {
               <FormGroup>
                 {/* <FormControlLabel control={<Checkbox defaultChecked />} label="Label" /> */}
                 <Typography variant='h4'><b>Categories:</b></Typography>
-                <FormControlLabel control={<Checkbox checked={categories.includes('snacks')} onChange={handleCategoryChange} name="snacks"/>} label="snacks" />
+                {/* <FormControlLabel control={<Checkbox checked={categories.includes('snacks')} onChange={handleCategoryChange} name="snacks"/>} label="snacks" />
                 <FormControlLabel control={<Checkbox checked={categories.includes('drinks')} onChange={handleCategoryChange} name="drinks"/>} label="drinks" />
                 <FormControlLabel control={<Checkbox checked={categories.includes('burgers')} onChange={handleCategoryChange} name="burgers"/>} label="burgers" />
                 <FormControlLabel control={<Checkbox checked={categories.includes('sandwichs')} onChange={handleCategoryChange} name="sandwichs"/>} label="sandwichs" />
                 <FormControlLabel control={<Checkbox checked={categories.includes('dairy')} onChange={handleCategoryChange} name="dairy"/>} label="dairy" />
-                <FormControlLabel control={<Checkbox checked={categories.includes('category6')} onChange={handleCategoryChange} name="category6"/>} label="category6" />
+                <FormControlLabel control={<Checkbox checked={categories.includes('category6')} onChange={handleCategoryChange} name="category6"/>} label="category6" /> */}
                 
+                {categories.map((c) => {
+                  return(
+                    <>
+                      <FormControlLabel
+                        key={c.id}
+                        control={
+                          <Checkbox
+                            checked={selectedCategories.includes(c.category)}
+                            onChange={()=>handleCategoryChange(c.category)}
+                            name={c.category}
+                          />
+                        }
+                        label={c.category}
+                      />
+                    </>
+                  )
+                })}
               </FormGroup>
             </div>
 
@@ -156,14 +195,14 @@ export default function ClippedDrawer() {
           {/* <input type="search" name="" id="" placeholder='search'  /><SearchOutlinedIcon/> */}
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div className="input-group" style={{width:"50%"}}>
-              <input type="search" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" value={search} onChange={(e)=>setSearch(e.target.value)} />
+              <input type="search" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"  onChange={handleSearch} />
               <button type="button" className="btn btn-primary">search</button>
             </div>
           </div>
 
           <Container sx={{ py: 3 }}>
             <div style={{display: 'grid',gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',gap: '1rem'}}>
-            {filteredProducts?.map((item)=>{
+            {(search !== '' ? filteredProducts : filterProductsByCategory()).map((item) => {
               return(
                 <>
                   <Card sx={{ maxWidth: 345 }} key={item.product} onClick={()=>handleOpen(item)}>

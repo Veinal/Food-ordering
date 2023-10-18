@@ -26,7 +26,8 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Productdeletecard from './Productdeletecard'
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 const style = {
   position: 'absolute',
@@ -52,7 +53,7 @@ export default function Productlist() {
     // console.log({[e.target.name]:e.target.value});
     setFrom({...form,[e.target.name]:e.target.value})
   }
-  console.log(form,'form');
+  // console.log(form,'form');
 
   let initialValue;
   if(localStorage.getItem("Food")===null){
@@ -66,7 +67,7 @@ export default function Productlist() {
     e.preventDefault();
     const newId=value.length===0? 1:value[value.length-1].id+1
     let user={
-      id:newId,...form
+      id:newId,status:'Available',...form
     }
     const newValue=[...value,user]
     setValue(newValue)
@@ -88,7 +89,7 @@ export default function Productlist() {
     if(set){
       setGet(set)
     }
-  },[get])
+  },[value])
   // console.log(get,"get");
 
   //Add product
@@ -111,6 +112,15 @@ export default function Productlist() {
   }
   const handleClosedel = () => setOpen5(false);
 
+  //to get category
+  const [loccat,setLoccat]=useState([])
+
+  useEffect(()=>{
+    const locset=JSON.parse(localStorage.getItem("Category"))
+    setLoccat(locset)
+  },[])
+
+  // console.log(loccat,'lc');
 
   return (
     <div>
@@ -151,6 +161,14 @@ export default function Productlist() {
                   <ListItemText secondary='Order list' />
                 </ListItemButton>
             </Link>
+            <Link to='/categorylist'>
+                <ListItemButton>
+                {/* <ListItemIcon>
+                    <InboxIcon />
+                </ListItemIcon> */}
+                <ListItemText secondary='Category list' />
+                </ListItemButton>
+            </Link>
           </List>
           
         </Box>
@@ -187,8 +205,8 @@ export default function Productlist() {
                     <td>{i.category}</td>
                     <td>{i.description}</td>
                     <td style={{display:'flex',gap:3}}>
-                      <Link to={`/editprolist/${i.id}`}><Button variant='contained' color='primary'>Edit</Button></Link>
-                      <Button onClick={()=>handleOpendel(i)} variant='contained' color='error'>Delete</Button>
+                      <Link to={`/editprolist/${i.id}`}><Button variant='contained' color='primary'><EditIcon fontSize='small'/>Edit</Button></Link>
+                      <Button onClick={()=>handleOpendel(i)} variant='contained' color='error'><DeleteIcon fontSize='small'/>Delete</Button>
                     </td>
                   </tr>
                 </>
@@ -218,7 +236,7 @@ export default function Productlist() {
           <TextField name='image' label="Image" variant="outlined" onChange={(e)=>Input(e)}/>
           <TextField name='price' label="Price" type="number" onChange={(e)=>Input(e)}/>
           {/* <TextField name='status' label="Status" variant="outlined" onChange={(e)=>Input(e)}/> */}
-          <Box sx={{ minWidth: 120 }}>
+          {/* <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Status</InputLabel>
               <Select
@@ -233,9 +251,28 @@ export default function Productlist() {
                 <MenuItem value={'Not Available'}>Not Available</MenuItem>
               </Select>
             </FormControl>
+          </Box> */}
+          {/* <TextField name='category' label="Category" variant="outlined" onChange={(e)=>Input(e)}/> */}
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Category</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                name='category'
+                // value={age}
+                label="Category"
+                onChange={(e)=>Input(e)}
+              >
+                {loccat?.map((category)=>{
+                  return(<MenuItem value={category.category}>{category.category}</MenuItem>)
+                })}
+               
+                
+              </Select>
+            </FormControl>
           </Box>
-          <TextField name='category' label="Category" variant="outlined" onChange={(e)=>Input(e)}/>
-          <TextField name='description' label="Description" variant="outlined" onChange={(e)=>Input(e)}/>
+          <TextField name='description' label="Description" variant="outlined" multiline maxRows={4} onChange={(e)=>Input(e)}/>
           <Button variant='contained' color='secondary' onClick={handleSubmit}><AddIcon/>ADD</Button>
         </div>
         </Box>
