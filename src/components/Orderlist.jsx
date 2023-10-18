@@ -20,13 +20,27 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Modal from '@mui/material/Modal';
 import Orderdeletecard from './Orderdeletecard'
 import Vieworders from './Vieworders'
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 
 const drawerWidth = 150;
 
 const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 600,
+  height:400,
+  bgcolor: 'background.paper',
+  border: '1px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
+const style2 = {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -108,6 +122,14 @@ export default function Orderlist() {
                   <ListItemText secondary='Order list' />
                 </ListItemButton>
             </Link>
+            <Link to='/categorylist'>
+                    <ListItemButton>
+                    {/* <ListItemIcon>
+                        <InboxIcon />
+                    </ListItemIcon> */}
+                    <ListItemText secondary='Category list' />
+                    </ListItemButton>
+                </Link>
           </List>
           
         </Box>
@@ -141,9 +163,9 @@ export default function Orderlist() {
                     <td>{o.quantity}</td>
                     <td>{o.totalAmount}</td>
                     <td style={{display:'flex', gap:'6px'}}>  
-                      <Button onClick={()=>handleOpenedit(o)}  variant='contained' color='success'>View</Button>
+                      <Button onClick={()=>handleOpenedit(o)}  variant='contained' color='success'><VisibilityIcon fontSize='small'/>View</Button>
                       {/* <Link to={`/editorderlist/${o.id2}`}><Button  variant='contained' color='primary'>Edit</Button></Link> */}
-                      <Button onClick={()=>handleOpendel2(o)}  variant='contained' color='error'>Delete</Button>
+                      <Button onClick={()=>handleOpendel2(o)}  variant='contained' color='error'><DeleteIcon fontSize='small'/>Delete</Button>
                     </td>
                   </tr>
                   </>
@@ -178,7 +200,7 @@ export default function Orderlist() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={style2}>
           <Orderdeletecard handleClosedel={handleClosedel} selectedProd2={selectedProd2} getOrders={getOrders} setGetOrders={setGetOrders} setCount2={setCount2}/>
         </Box>
       </Modal>

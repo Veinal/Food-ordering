@@ -27,7 +27,22 @@ import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
 import sideimage from '../side-image.jpg'
 import img1 from '../image01.jpg'
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
+import CancelIcon from '@mui/icons-material/Cancel';
+import Cancelorder from './Cancelorder'
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 const drawerWidth = 240;
 
@@ -62,6 +77,16 @@ export default function ClippedDrawer() {
       setGet3(set3)
     }
   },[count3])
+
+  const [open, setOpen] = React.useState(false);
+  const [selectedOrder,setSelectedOrder]=useState('')
+
+  const handleOpen = (row) => {
+    setOpen(true);
+    setSelectedOrder(row)
+  }
+  const handleClose = () => setOpen(false);
+
 
   return (
     <div>
@@ -104,6 +129,7 @@ export default function ClippedDrawer() {
                       <StyledTableCell>Product</StyledTableCell>
                       <StyledTableCell>Quantity</StyledTableCell>
                       <StyledTableCell>Amount</StyledTableCell>
+                      <StyledTableCell>Actions</StyledTableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -116,6 +142,9 @@ export default function ClippedDrawer() {
                         <StyledTableCell>{row.product}</StyledTableCell>
                         <StyledTableCell>{row.quantity}</StyledTableCell>
                         <StyledTableCell>{row.totalAmount}</StyledTableCell>
+                        <StyledTableCell>
+                          <Button variant='contained' color='error' onClick={()=>handleOpen(row)}><CancelIcon/>Cancel</Button>
+                        </StyledTableCell>
                       </StyledTableRow>
                     ))}
                   </TableBody>
@@ -124,6 +153,17 @@ export default function ClippedDrawer() {
               
             </Box>
         </Box>
+
+        <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Cancelorder get3={get3} selectedOrder={selectedOrder} setGet3={setGet3} setCount3={setCount3} handleClose={handleClose}/>
+        </Box>
+      </Modal>
     </div>
   );
 }

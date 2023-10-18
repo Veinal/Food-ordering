@@ -15,6 +15,9 @@ import ListItemText from '@mui/material/ListItemText';
 // import MailIcon from '@mui/icons-material/Mail';
 import { Link } from 'react-router-dom';
 import Image02 from '../image02.jpg'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Button } from '@mui/material';
+
 
 const drawerWidth = 240;
 
@@ -24,7 +27,8 @@ export default function ClippedDrawer() {
       <CssBaseline />
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
-          <Typography variant="h6" noWrap component="div">
+        <Link to='/' ><Button variant='contained' color='success' style={{marginLeft:'-10px',padding:'8px'}}><ArrowBackIcon/> Back to home</Button></Link>
+          <Typography variant="h6" noWrap component="div" style={{marginLeft:'20px'}}>
             ADMIN DASHBOARD
           </Typography>
         </Toolbar>
@@ -54,6 +58,14 @@ export default function ClippedDrawer() {
                     <InboxIcon />
                   </ListItemIcon> */}
                   <ListItemText secondary='Order list' />
+                </ListItemButton>
+            </Link>
+            <Link to='/categorylist'>
+                <ListItemButton>
+                  {/* <ListItemIcon>
+                    <InboxIcon />
+                  </ListItemIcon> */}
+                  <ListItemText secondary='Category list' />
                 </ListItemButton>
             </Link>
           </List>
