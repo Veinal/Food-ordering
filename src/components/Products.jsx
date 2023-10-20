@@ -115,6 +115,7 @@ console.log(get2,'get');
 
   const [search, setSearch] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [noResullt,setNoResult] = useState(false)
 
   const handleSearch = (e) => {
     const searchText = e.target.value.toLowerCase();
@@ -126,6 +127,8 @@ console.log(get2,'get');
       item.product && item.product.toLowerCase().includes(searchText)
     );
     setFilteredProducts(filtered);
+
+    setNoResult(filtered.length === 0)
   };
   
   const filterProductsByCategory = () => {
@@ -161,13 +164,6 @@ console.log(get2,'get');
               <FormGroup>
                 {/* <FormControlLabel control={<Checkbox defaultChecked />} label="Label" /> */}
                 <Typography variant='h4'><b>Categories:</b></Typography>
-                {/* <FormControlLabel control={<Checkbox checked={categories.includes('snacks')} onChange={handleCategoryChange} name="snacks"/>} label="snacks" />
-                <FormControlLabel control={<Checkbox checked={categories.includes('drinks')} onChange={handleCategoryChange} name="drinks"/>} label="drinks" />
-                <FormControlLabel control={<Checkbox checked={categories.includes('burgers')} onChange={handleCategoryChange} name="burgers"/>} label="burgers" />
-                <FormControlLabel control={<Checkbox checked={categories.includes('sandwichs')} onChange={handleCategoryChange} name="sandwichs"/>} label="sandwichs" />
-                <FormControlLabel control={<Checkbox checked={categories.includes('dairy')} onChange={handleCategoryChange} name="dairy"/>} label="dairy" />
-                <FormControlLabel control={<Checkbox checked={categories.includes('category6')} onChange={handleCategoryChange} name="category6"/>} label="category6" /> */}
-                
                 {categories.map((c) => {
                   return(
                     <>
@@ -202,8 +198,16 @@ console.log(get2,'get');
 
           <Container sx={{ py: 3 }}>
             <div style={{display: 'grid',gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',gap: '1rem'}}>
-            {(search !== '' ? filteredProducts : filterProductsByCategory()).map((item) => {
-              return(
+              {/* no results found */}
+              {noResullt ? 
+              (
+                <Typography variant='h5' color='textSecondary' style={{marginLeft:'300px',width:200}}>
+                  No results found
+                </Typography>
+              )
+            :
+              (search !== '' ? filteredProducts : filterProductsByCategory()).map((item) => {
+                return(
                 <>
                   <Card sx={{ maxWidth: 345 }} key={item.product} onClick={()=>handleOpen(item)}>
                     <CardMedia
@@ -231,8 +235,8 @@ console.log(get2,'get');
                     </div>
                   </Card>
                 </>
-              )
-            })}
+                )
+              })}
             
             </div>
           </Container>

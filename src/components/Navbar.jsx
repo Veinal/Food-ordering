@@ -34,7 +34,7 @@ export default function Navbar() {
                 <Link to='/'><a className="nav-link" href="#">Home</a></Link>
                 </li>
                 <li className="nav-item">
-                <Link to='/products'><a className="nav-link" href="#">Products</a></Link>
+                <Link to='/products'><a className="nav-link" href="#">Menu</a></Link>
                 </li>
                 <li className="nav-item">
                 <Link to='/orders'><a className="nav-link" href="#">Orders</a></Link>

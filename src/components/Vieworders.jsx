@@ -23,13 +23,16 @@ export default function MediaCard({selectedProd2,handleCloseedit}) {
           <b><u>CUSTOMER DETAILS</u></b>
         </Typography>
         <Typography variant="body2" >
-          {/* <img src={selectedProd2.image} alt="no image found" style={{width:200}} /> */}
-          <h5><label><b><u>Name:</u></b></label>{selectedProd2.name}</h5>
-          <h5><label><b><u>Phone:</u></b></label>{selectedProd2.phone}</h5>
-          <h5><label><b><u>Address:</u></b></label>{selectedProd2.address}</h5>
-          <h5><label><b><u>product:</u></b></label>{selectedProd2.product}</h5>
-          <h5><label><b><u>Quantity:</u></b></label>{selectedProd2.quantity}</h5>
-          <h5><label><b><u>amount:</u></b></label>{selectedProd2.totalAmount}</h5>
+          <span style={{display:'flex',justifyContent:'center'}}><img src={selectedProd2.picture} alt="no image found" style={{width:140,borderRadius:'20px'}} /></span>
+          <hr /> 
+          <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:5}}>
+            <h5><label><b><u>Name:</u></b></label>{selectedProd2.name}</h5>
+            <h5><label><b><u>Phone:</u></b></label>{selectedProd2.phone}</h5>
+            <h5><label><b><u>Address:</u></b></label>{selectedProd2.address}</h5>
+            <h5><label><b><u>product:</u></b></label>{selectedProd2.product}</h5>
+            <h5><label><b><u>Quantity:</u></b></label>{selectedProd2.quantity}</h5>
+            <h5><label><b><u>amount:</u></b></label>{selectedProd2.totalAmount}</h5>
+          </div>
         </Typography>
         <span style={{display:'flex',justifyContent:'center',alignItems:"center"}}><Button onClick={handleCloseedit} variant='contained' color='error'><CloseIcon/>Close</Button></span>
 

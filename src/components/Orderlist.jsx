@@ -33,7 +33,7 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 600,
-  height:400,
+  height:500,
   bgcolor: 'background.paper',
   border: '1px solid #000',
   boxShadow: 24,
@@ -145,6 +145,7 @@ export default function Orderlist() {
                 <th>Phone</th>
                 <th>Address</th>
                 <th>Product</th>
+                <th>Picture</th>
                 <th>Quantity</th>
                 <th>Amount</th>
                 <th>Actions</th>
@@ -160,6 +161,7 @@ export default function Orderlist() {
                     <td>{o.phone}</td>
                     <td>{o.address}</td>
                     <td>{o.product}</td>
+                    <td><img src={o.picture} alt="" style={{width:40}} /></td>
                     <td>{o.quantity}</td>
                     <td>{o.totalAmount}</td>
                     <td style={{display:'flex', gap:'6px'}}>  
