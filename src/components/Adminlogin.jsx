@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -31,14 +31,35 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
+
 export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const nav=useNavigate()
+
+  const [adminState,setAdminState]=React.useState()
+
+  const handleChange=(e)=>{
+    setAdminState({...adminState,[e.target.name]:e.target.value})
+    // console.log(adminState,'as');
+  }
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const adminValue=adminState
+    localStorage.setItem("Admin",JSON.stringify(adminValue))
+
+    const enteredEmail=adminState.email
+    const enteredPass=adminState.password
+    console.log(enteredEmail,'mail');
+    console.log(enteredPass,'pass');
+
+    const checkAdmin= JSON.parse(localStorage.getItem("Admin"))
+
+    if(checkAdmin && checkAdmin.email === enteredEmail && checkAdmin.password===enteredPass){
+      nav('/adminpage')
+    } else{
+      alert("enter email and password properly")
+    }
   };
 
   return (
@@ -59,29 +80,9 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             ADMIN login
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate  sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              {/* <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid> */}
+              
               <Grid item xs={12}>
                 <TextField
                   required
@@ -89,8 +90,9 @@ export default function SignUp() {
                   id="email"
                   label="Email Address"
                   name="email"
-                  value='veinalseq@gmail.com'
+                  // value='veinalseq@gmail.com'
                   autoComplete="email"
+                  onChange={(e)=>handleChange(e)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -101,8 +103,9 @@ export default function SignUp() {
                   label="Password"
                   type="password"
                   id="password"
-                  value='veinalseq'
+                  // value='veinalseq'
                   autoComplete="new-password"
+                  onChange={(e)=>handleChange(e)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -117,6 +120,7 @@ export default function SignUp() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                onClick={handleSubmit}
               >
                 Login
               </Button>

@@ -127,6 +127,7 @@ export default function ClippedDrawer() {
                       <StyledTableCell>Phone</StyledTableCell>
                       <StyledTableCell>Address</StyledTableCell>
                       <StyledTableCell>Product</StyledTableCell>
+                      <StyledTableCell>Picture</StyledTableCell>
                       <StyledTableCell>Quantity</StyledTableCell>
                       <StyledTableCell>Amount</StyledTableCell>
                       <StyledTableCell>Actions</StyledTableCell>
@@ -140,6 +141,7 @@ export default function ClippedDrawer() {
                         <StyledTableCell>{row.phone}</StyledTableCell>
                         <StyledTableCell>{row.address}</StyledTableCell>
                         <StyledTableCell>{row.product}</StyledTableCell>
+                        <StyledTableCell><img src={row.picture} alt="" style={{width:40}} /></StyledTableCell>
                         <StyledTableCell>{row.quantity}</StyledTableCell>
                         <StyledTableCell>{row.totalAmount}</StyledTableCell>
                         <StyledTableCell>

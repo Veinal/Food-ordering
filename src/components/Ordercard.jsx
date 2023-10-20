@@ -50,7 +50,8 @@ export default function BasicCard({handleClose2,selproduct,handleBothClose}) {
       id2:newID2,...conforder,
       product:selproduct.product,
       totalAmount:selproduct.price * quantity,
-      quantity:quantity
+      quantity:quantity,
+      picture:selproduct.image
     }
     const newValue2=[...value2,user2]
     setValue2(newValue2)
@@ -85,7 +86,7 @@ export default function BasicCard({handleClose2,selproduct,handleBothClose}) {
           <Typography>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <img src={selproduct.image} alt="Product" style={{width:200}}/>
+                <div class="animate__animated animate__bounceInRight"><img src={selproduct.image} alt="Product" style={{width:200}}/></div>
               </Grid>
               <Grid item xs={6}>
                 <label>Product:</label>
@@ -116,7 +117,7 @@ export default function BasicCard({handleClose2,selproduct,handleBothClose}) {
           </Typography>
         </CardContent>
         {selproduct.status === 'Available' ? (
-          <Button variant='contained' onClick={handleOpen}>Purchase</Button>
+          <div class="animate__animated animate__fadeInRightBig"><Button variant='contained' onClick={handleOpen}>Purchase</Button></div>
         ):(
           <Button variant='contained' disabled>Purchase (Not Available)</Button>
         )}
