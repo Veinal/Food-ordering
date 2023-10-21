@@ -34,7 +34,10 @@ const defaultTheme = createTheme();
 
 export default function SignUp() {
   const nav=useNavigate()
-
+  const adminInfo = {email:"veinal@gmail.com",password:"veinal123"}
+  React.useEffect(()=>{
+    localStorage.setItem("Admin",JSON.stringify(adminInfo))
+  },[])
   const [adminState,setAdminState]=React.useState()
 
   const handleChange=(e)=>{
@@ -45,17 +48,11 @@ export default function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const adminValue=adminState
-    localStorage.setItem("Admin",JSON.stringify(adminValue))
+  
+    // console.log(adminInfo.email,'mail');
+    // console.log(adminInfo.password,'pass');
 
-    const enteredEmail=adminState.email
-    const enteredPass=adminState.password
-    console.log(enteredEmail,'mail');
-    console.log(enteredPass,'pass');
-
-    const checkAdmin= JSON.parse(localStorage.getItem("Admin"))
-
-    if(checkAdmin && checkAdmin.email === enteredEmail && checkAdmin.password===enteredPass){
+    if(adminState && adminState.email === adminInfo.email && adminState.password===adminInfo.password){
       nav('/adminpage')
     } else{
       alert("enter email and password properly")
