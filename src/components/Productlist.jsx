@@ -41,7 +41,7 @@ const style = {
   p: 4,
 };
 
-const drawerWidth = 150;
+const drawerWidth = 200;
 
 
 export default function Productlist() {
@@ -176,7 +176,7 @@ export default function Productlist() {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
         
-        <Button variant='contained'  onClick={handleOpen}><AddIcon/>ADD PRODUCT</Button>
+        <Button variant='contained'  onClick={handleOpen}><AddIcon/>ADD PRODUCT</Button> <br /><br />
 
         <Typography >
         <table className="table align-middle mb-0 bg-white">
