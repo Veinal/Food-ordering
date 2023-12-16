@@ -111,7 +111,7 @@ export default function ClippedDrawer() {
             <Toolbar />
             <Box sx={{ overflow: 'auto' }}>
 
-              <img src={sideimage} alt="ORDERS" style={{width:'100%',height:'530px'}} />
+              <img src={sideimage} alt="ORDERS" style={{width:'100%',height:'660px'}} />
               
             </Box>
           </Drawer>

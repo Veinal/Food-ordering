@@ -28,7 +28,7 @@ import CardContent from '@mui/material/CardContent';
 
 
 
-const drawerWidth = 150;
+const drawerWidth = 200;
 
 const style = {
     position: 'absolute',
@@ -137,7 +137,7 @@ export default function Categorylist() {
                     {/* <ListItemIcon>
                         <InboxIcon />
                     </ListItemIcon> */}
-                    <ListItemText secondary='Product list' />
+                    <ListItemText secondary='Product list'/>
                     </ListItemButton>
                 </Link>
                 <Link to='/orderlist'>
@@ -164,7 +164,7 @@ export default function Categorylist() {
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
             <Toolbar />
 
-                <Button variant='contained'  onClick={handleOpencat1}><AddIcon/>ADD CATEGORY</Button>
+                <Button variant='contained'  onClick={handleOpencat1}><AddIcon/>ADD CATEGORY</Button> <br /><br />
                 
             <Typography paragraph>
             <table className="table align-middle mb-0 bg-white">

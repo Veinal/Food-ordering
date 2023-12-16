@@ -197,7 +197,7 @@ console.log(get2,'get');
           </div>
 
           <Container sx={{ py: 3 }}>
-            <div style={{display: 'grid',gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',gap: '1rem'}}>
+            <div style={{display: 'grid',gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',gap: '1rem'}}>
               {/* no results found */}
               {noResullt ? 
               (

@@ -25,7 +25,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 
 
-const drawerWidth = 150;
+const drawerWidth = 200;
 
 const style = {
   position: 'absolute',
